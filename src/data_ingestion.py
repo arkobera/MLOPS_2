@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import logging 
 import os
+import yaml
 
 # Create logs directory if it doesn't exist
 log_dir = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/logs"
@@ -23,6 +24,18 @@ file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(logger_formatter)
 logger.addHandler(file_handler)
 # src/data_ingestion.py
+
+def load_parameters(config_path: str) -> dict:
+    try:
+        with open(config_path, 'r') as file:
+            params = yaml.safe_load(file)
+        logger.info("Parameters loaded successfully")
+        print("Parameters loaded successfully")
+        return params
+    except Exception as e:
+        logger.error(f"Error loading parameters: {e}")
+        print(f"Error loading parameters: {e}")
+        return {}
 
 
 def load_data(train_path: str, test_path: str):
@@ -51,19 +64,18 @@ def preprocess_data(data: pd.DataFrame) -> pd.DataFrame:
 
 def save_data(train_data: pd.DataFrame, test_data: pd.DataFrame, output_path: str) -> None:
     try:
-        raw_data_path = os.path.join(output_path, "raw")
-        os.makedirs(raw_data_path, exist_ok=True)
-        #os.makedirs(output_path, exist_ok=True)
-        train_data.to_csv(os.path.join(raw_data_path, "train.csv"), index=False)
-        test_data.to_csv(os.path.join(raw_data_path, "test.csv"), index=False)
+        os.makedirs(output_path, exist_ok=True)
+        train_data.to_csv(os.path.join(output_path, "train.csv"), index=False)
+        test_data.to_csv(os.path.join(output_path, "test.csv"), index=False)
         logger.debug("Data saved successfully")
     except Exception as e:
         logger.error(f"Error saving data: {e}")
 
 if __name__ == "__main__":
-    train_path = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Original/train.csv"
-    test_path = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Original/test.csv"
-    output_path = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/data"  # Save outside src, at project root
+    params = load_parameters("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/params.yaml")
+    train_path = params['data_ingestion']['train_file']
+    test_path = params["data_ingestion"]["test_file"]
+    output_path = params["data_ingestion"]["output_dir"]
 
     try:
         train_data, test_data = load_data(train_path, test_path)

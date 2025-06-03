@@ -4,6 +4,7 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 from scipy import stats
 from warnings import filterwarnings
+import yaml
 
 filterwarnings("ignore")
 
@@ -29,6 +30,18 @@ file_handler = logging.FileHandler(os.path.join(log_dir, 'EDA.log'))
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(logger_formatter)
 logger.addHandler(file_handler)
+
+def load_parameters(config_path: str) -> dict:
+    try:
+        with open(config_path, 'r') as file:
+            params = yaml.safe_load(file)
+        logger.info("Parameters loaded successfully")
+        print("Parameters loaded successfully")
+        return params
+    except Exception as e:
+        logger.error(f"Error loading parameters: {e}")
+        print(f"Error loading parameters: {e}")
+        return {}
 
 
 class Load_Data:
@@ -264,7 +277,8 @@ class Load_Data:
     
 def main():
     try:
-        path = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/data/EDA"
+        params = load_parameters("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/params.yaml")
+        path = params['EDA']['path']
         os.makedirs(path, exist_ok=True)  # Ensure the directory exists
         train_df = pd.read_csv("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/data/raw/train.csv")
         eda = Load_Data(file_df=train_df)
@@ -284,3 +298,5 @@ if __name__ == "__main__":
     main()
     logger.info("EDA completed successfully.")
     print("EDA completed successfully.")
+
+    

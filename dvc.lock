@@ -3,18 +3,18 @@ stages:
   data_ingestion:
     cmd: python src/data_ingestion.py
     deps:
-    - path: Experiments/test.csv
+    - path: Original/test.csv
       hash: md5
       md5: e44258ef78fa9984cf0a63d1ab5a7fbf
       size: 10524308
-    - path: Experiments/train.csv
+    - path: Original/train.csv
       hash: md5
       md5: 970f84f7178e87d71712d049abcbcc35
       size: 35463548
     - path: src/data_ingestion.py
       hash: md5
-      md5: dc3e08e50edd5f96f08d095140ad4610
-      size: 3205
+      md5: b36134b53bd9b497b8ab55d8fa023567
+      size: 3520
     outs:
     - path: data/raw
       hash: md5
@@ -34,13 +34,13 @@ stages:
       size: 28073214
     - path: src/EDA.py
       hash: md5
-      md5: 990b506d6b4e57ea19578bdde142e7bb
-      size: 14133
+      md5: 5ce9e8d3cf4e2050dd1c9d3097cbfb96
+      size: 14642
     outs:
     - path: data/EDA
       hash: md5
-      md5: 6a86b6f549d97324577d1aa797a2c8c8.dir
-      size: 10804
+      md5: 5018cf555b5ddac6e3328caad7dcb546.dir
+      size: 10802
       nfiles: 2
   modeling:
     cmd: python src/modeling.py
@@ -55,26 +55,26 @@ stages:
       size: 28073214
     - path: src/modeling.py
       hash: md5
-      md5: ffee767da40a0beeb5159a56d4f4ef78
-      size: 6232
+      md5: 60d1c7fd5525ce953bde276f29fc8df0
+      size: 6241
     outs:
     - path: Models/Evaluation
       hash: md5
-      md5: e0d3935e4e584361b98f0054181eb717.dir
+      md5: b8234e3d66504466e3b70801903cbb60.dir
       size: 23
       nfiles: 1
     - path: Models/model
       hash: md5
-      md5: 593dd09173d213b1853f719730637d13.dir
-      size: 23457826
+      md5: eb8eb524d876e3820a11744ec738b08e.dir
+      size: 23149514
       nfiles: 1
     - path: Predictions/Oofs
       hash: md5
-      md5: 7fcb5a2246670a5f11fbb3cf9dd5e439.dir
-      size: 19703353
+      md5: 7ebd92280cbe1a13a6c42fd54236f2bc.dir
+      size: 19703497
       nfiles: 1
     - path: Predictions/Submissions
       hash: md5
-      md5: 8726eff24234ee615d77ff59461568d4.dir
-      size: 6493641
+      md5: a7f8f8a01371f5af6d5291c29583ea41.dir
+      size: 6445733
       nfiles: 1

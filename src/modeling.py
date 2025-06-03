@@ -35,7 +35,7 @@ class Trainer:
         self.pred = np.zeros(len(self.test))
         
     def train(self):
-        kf = KFold(n_splits=5, shuffle=True, random_state=42)
+        kf = KFold(n_splits=self.folds, shuffle=True, random_state=42)
         for fold,(train_indx,test_indx) in enumerate(kf.split(self.X,self.y)):
             print(f"Fold : {fold+1}")
             x_train, y_train = self.X.iloc[train_indx],self.y.iloc[train_indx]
@@ -127,7 +127,7 @@ def main():
         X = train_data.copy()
         y = X.pop('Calories')
         test = test_data.copy()
-        trainer = Trainer(X, y, folds=5, test=test)
+        trainer = Trainer(X, y, folds=2, test=test)
         trainer.train()
         trainer.save_predictions()
         trainer.save_oofs()
