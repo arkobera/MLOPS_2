@@ -61,8 +61,8 @@ def save_data(train_data: pd.DataFrame, test_data: pd.DataFrame, output_path: st
         logger.error(f"Error saving data: {e}")
 
 if __name__ == "__main__":
-    train_path = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Experiments/train.csv"
-    test_path = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Experiments/test.csv"
+    train_path = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Original/train.csv"
+    test_path = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Original/test.csv"
     output_path = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/data"  # Save outside src, at project root
 
     try:
