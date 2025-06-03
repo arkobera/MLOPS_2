@@ -1,0 +1,80 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    deps:
+    - path: Experiments/test.csv
+      hash: md5
+      md5: e44258ef78fa9984cf0a63d1ab5a7fbf
+      size: 10524308
+    - path: Experiments/train.csv
+      hash: md5
+      md5: 970f84f7178e87d71712d049abcbcc35
+      size: 35463548
+    - path: src/data_ingestion.py
+      hash: md5
+      md5: dc3e08e50edd5f96f08d095140ad4610
+      size: 3205
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: 88efd93c055a79a38754ef21ec98e54a.dir
+      size: 36096958
+      nfiles: 2
+  EDA:
+    cmd: python src/EDA.py
+    deps:
+    - path: data/raw/test.csv
+      hash: md5
+      md5: eea124c43b4feda64c4ec01db4cec095
+      size: 8023744
+    - path: data/raw/train.csv
+      hash: md5
+      md5: d4aef6b0eee883241de7f7715945bc12
+      size: 28073214
+    - path: src/EDA.py
+      hash: md5
+      md5: 990b506d6b4e57ea19578bdde142e7bb
+      size: 14133
+    outs:
+    - path: data/EDA
+      hash: md5
+      md5: 6a86b6f549d97324577d1aa797a2c8c8.dir
+      size: 10804
+      nfiles: 2
+  modeling:
+    cmd: python src/modeling.py
+    deps:
+    - path: data/raw/test.csv
+      hash: md5
+      md5: eea124c43b4feda64c4ec01db4cec095
+      size: 8023744
+    - path: data/raw/train.csv
+      hash: md5
+      md5: d4aef6b0eee883241de7f7715945bc12
+      size: 28073214
+    - path: src/modeling.py
+      hash: md5
+      md5: ffee767da40a0beeb5159a56d4f4ef78
+      size: 6232
+    outs:
+    - path: Models/Evaluation
+      hash: md5
+      md5: e0d3935e4e584361b98f0054181eb717.dir
+      size: 23
+      nfiles: 1
+    - path: Models/model
+      hash: md5
+      md5: 593dd09173d213b1853f719730637d13.dir
+      size: 23457826
+      nfiles: 1
+    - path: Predictions/Oofs
+      hash: md5
+      md5: 7fcb5a2246670a5f11fbb3cf9dd5e439.dir
+      size: 19703353
+      nfiles: 1
+    - path: Predictions/Submissions
+      hash: md5
+      md5: 8726eff24234ee615d77ff59461568d4.dir
+      size: 6493641
+      nfiles: 1

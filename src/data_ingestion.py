@@ -4,7 +4,7 @@ import logging
 import os
 
 # Create logs directory if it doesn't exist
-log_dir = "../logs"
+log_dir = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/logs"
 os.makedirs(log_dir, exist_ok=True)
 
 logger = logging.getLogger(__name__)
@@ -61,9 +61,9 @@ def save_data(train_data: pd.DataFrame, test_data: pd.DataFrame, output_path: st
         logger.error(f"Error saving data: {e}")
 
 if __name__ == "__main__":
-    train_path = "../Experiments/train.csv"
-    test_path = "../Experiments/test.csv"
-    output_path = "../data"  # Save outside src, at project root
+    train_path = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Experiments/train.csv"
+    test_path = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Experiments/test.csv"
+    output_path = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/data"  # Save outside src, at project root
 
     try:
         train_data, test_data = load_data(train_path, test_path)

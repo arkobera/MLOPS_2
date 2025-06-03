@@ -11,7 +11,7 @@ import logging
 import os
 
 # Create logs directory if it doesn't exist
-log_dir = "../logs"
+log_dir = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/logs"
 os.makedirs(log_dir, exist_ok=True)
 
 logger = logging.getLogger(__name__)
@@ -264,15 +264,16 @@ class Load_Data:
     
 def main():
     try:
-        os.makedirs("../data/EDA", exist_ok=True)  # Ensure the directory exists
-        train_df = pd.read_csv("../data/raw/train.csv")
+        path = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/data/EDA"
+        os.makedirs(path, exist_ok=True)  # Ensure the directory exists
+        train_df = pd.read_csv("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/data/raw/train.csv")
         eda = Load_Data(file_df=train_df)
         summary = eda.summarize(include='all')
-        summary.to_excel("../data/EDA/EDA_summary.xlsx", index=False)
+        summary.to_excel("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/data/EDA/EDA_summary.xlsx", index=False)
         logger.info("EDA summary saved to Excel.")
         #eda.visualize(include='all', sample=1000, target='Calories')
         dep_df = eda.feature_target_dependence(target_col='Calories')
-        dep_df.to_excel("../data/EDA/EDA_dependence.xlsx", index=False)  # Save dependence DataFrame to Excel
+        dep_df.to_excel("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/data/EDA/EDA_dependence.xlsx", index=False)  # Save dependence DataFrame to Excel
         logger.info("EDA dependence analysis saved to Excel.")
         #print("EDA completed successfully.")
     except Exception as e:

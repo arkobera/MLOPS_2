@@ -8,7 +8,7 @@ import joblib
 from sklearn.metrics import root_mean_squared_error
 
 # Create logs directory if it doesn't exist
-log_dir = "../logs" 
+log_dir = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/logs" 
 os.makedirs(log_dir, exist_ok=True)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -65,12 +65,12 @@ class Trainer:
 
     def save_predictions(self,file_name='submission.csv'):
         try:
-            os.makedirs("../Predictions/Submissions", exist_ok=True)
+            os.makedirs("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Predictions/Submissions", exist_ok=True)
             submission = pd.DataFrame({
                 'id': self.test.index,
                 'Calories': np.expm1(self.pred)
             })
-            submission.to_csv(os.path.join("../Predictions/Submissions", file_name), index=False)
+            submission.to_csv(os.path.join("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Predictions/Submissions", file_name), index=False)
             logger.info("Predictions saved successfully")
         except Exception as e:
             logger.error(f"Error saving predictions: {e}")
@@ -78,12 +78,12 @@ class Trainer:
 
     def save_oofs(self, file_name='oofs.csv'):
         try:
-            os.makedirs("../Predictions/Oofs", exist_ok=True)
+            os.makedirs("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Predictions/Oofs", exist_ok=True)
             oofs = pd.DataFrame({
                 'id': self.X.index,
                 'Calories': np.expm1(self.oofs)
             })
-            oofs.to_csv(os.path.join("../Predictions/Oofs", file_name), index=False)
+            oofs.to_csv(os.path.join("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Predictions/Oofs", file_name), index=False)
             logger.info("OOFs saved successfully")
         except Exception as e:
             logger.error(f"Error saving OOFs: {e}")
@@ -92,8 +92,8 @@ class Trainer:
     def save_model(self, file_name='xgboost_model.pkl'):
         try:
             model = self.model
-            os.makedirs("../Models", exist_ok=True)
-            joblib.dump(model, os.path.join("../Models", file_name))
+            os.makedirs("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Models/model", exist_ok=True)
+            joblib.dump(model, os.path.join("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Models/model", file_name))
             logger.info("Model saved successfully as pkl")
         except Exception as e:
             logger.error(f"Error saving model: {e}")
@@ -101,8 +101,8 @@ class Trainer:
 
     def save_score(self, file_name='score.txt'):
         try:
-            os.makedirs("../Models/Evaluation", exist_ok=True)
-            with open(os.path.join("../Models/Evaluation", file_name), 'w') as f:
+            os.makedirs("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Models/Evaluation", exist_ok=True)
+            with open(os.path.join("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Models/Evaluation", file_name), 'w') as f:
                 f.write(f"RMSE: {self.score}")
             logger.info("Score saved successfully")
         except Exception as e:
@@ -111,7 +111,7 @@ class Trainer:
 
     def load_model(self, file_name='xgboost_model.pkl'):
         try:
-            model = joblib.load(os.path.join("../Models", file_name))
+            model = joblib.load(os.path.join("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Models", file_name))
             logger.info("Model loaded successfully")
             return model
         except Exception as e:
@@ -121,8 +121,8 @@ class Trainer:
         
 def main():
     try:
-        train_data = pd.read_csv("../data/raw/train.csv")
-        test_data = pd.read_csv("../data/raw/test.csv")
+        train_data = pd.read_csv("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/data/raw/train.csv")
+        test_data = pd.read_csv("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/data/raw/test.csv")
         logger.info("Data loaded successfully")
         X = train_data.copy()
         y = X.pop('Calories')

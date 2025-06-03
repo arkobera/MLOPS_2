@@ -1,0 +1,30 @@
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    deps:
+      - src/data_ingestion.py
+      - Experiments/train.csv
+      - Experiments/test.csv
+    outs:
+      - data/raw
+  
+  EDA:
+    cmd: python src/EDA.py
+    deps:
+      - src/EDA.py
+      - data/raw/train.csv
+      - data/raw/test.csv
+    outs:
+      - data/EDA
+
+  modeling:
+    cmd: python src/modeling.py
+    deps:
+      - src/modeling.py
+      - data/raw/train.csv
+      - data/raw/test.csv
+    outs:
+      - Models/model
+      - Models/Evaluation
+      - Predictions/Submissions
+      - Predictions/Oofs
