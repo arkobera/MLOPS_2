@@ -1,0 +1,6 @@
+data_ingestion:
+  train_file: C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Original/train.csv
+  test_file: C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/Original/test.csv
+  output_dir: C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/data/raw
+EDA:
+  path: C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/data/EDA

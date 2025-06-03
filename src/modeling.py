@@ -6,6 +6,9 @@ import os
 import numpy as np
 import joblib
 from sklearn.metrics import root_mean_squared_error
+import yaml
+import dvclive
+from dvclive import Live
 
 # Create logs directory if it doesn't exist
 log_dir = "C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/logs" 
@@ -22,6 +25,20 @@ file_handler = logging.FileHandler(os.path.join(log_dir, 'modeling.log'))
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(logger_formatter)
 logger.addHandler(file_handler)
+
+
+
+def load_parameters(config_path: str) -> dict:
+    try:
+        with open(config_path, 'r') as file:
+            params = yaml.safe_load(file)
+        logger.info("Parameters loaded successfully")
+        print("Parameters loaded successfully")
+        return params
+    except Exception as e:
+        logger.error(f"Error loading parameters: {e}")
+        print(f"Error loading parameters: {e}")
+        return {}
 # src/modeling.py
 
 class Trainer:
@@ -60,7 +77,7 @@ class Trainer:
             self.pred += self.model.predict(self.test)
             logger.info(f"Fold {fold+1} completed successfully")
         self.pred /= 5
-        self.score = root_mean_squared_error(np.expm1(self.y), np.expm1(self.oofs))
+        self.score = root_mean_squared_error(self.y, self.oofs)
         logger.info(f"Training completed with RMSE: {self.score}")
 
     def save_predictions(self,file_name='submission.csv'):
@@ -121,18 +138,23 @@ class Trainer:
         
 def main():
     try:
+        params = load_parameters("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/params.yaml")
         train_data = pd.read_csv("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/data/raw/train.csv")
         test_data = pd.read_csv("C:/Users/ARKO BERA/Desktop/MLOPS/MLOPS_2/data/raw/test.csv")
         logger.info("Data loaded successfully")
         X = train_data.copy()
         y = X.pop('Calories')
         test = test_data.copy()
-        trainer = Trainer(X, y, folds=2, test=test)
+        trainer = Trainer(X, y, folds=3, test=test)
         trainer.train()
         trainer.save_predictions()
         trainer.save_oofs()
         trainer.save_score()
         trainer.save_model()
+        metrics = trainer.score
+        with Live(save_dvc_exp=True) as live:
+            live.log_metric('RMSLE', metrics)
+            live.log_params(params)
         logger.info("Training and saving process completed successfully")
     except FileNotFoundError as e:
         logger.error(f"File not found: {e}")

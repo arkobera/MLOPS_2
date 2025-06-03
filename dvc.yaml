@@ -2,29 +2,36 @@ stages:
   data_ingestion:
     cmd: python src/data_ingestion.py
     deps:
-      - src/data_ingestion.py
-      - Original/train.csv
-      - Original/test.csv
+    - src/data_ingestion.py
+    - Original/train.csv
+    - Original/test.csv
     outs:
-      - data/raw
-  
+    - data/raw
+
   EDA:
     cmd: python src/EDA.py
     deps:
-      - src/EDA.py
-      - data/raw/train.csv
-      - data/raw/test.csv
+    - src/EDA.py
+    - data/raw/train.csv
+    - data/raw/test.csv
     outs:
-      - data/EDA
+    - data/EDA
 
   modeling:
     cmd: python src/modeling.py
     deps:
-      - src/modeling.py
-      - data/raw/train.csv
-      - data/raw/test.csv
+    - src/modeling.py
+    - data/raw/train.csv
+    - data/raw/test.csv
     outs:
-      - Models/model
-      - Models/Evaluation
-      - Predictions/Submissions
-      - Predictions/Oofs
+    - Models/model
+    - Models/Evaluation
+    - Predictions/Submissions
+    - Predictions/Oofs
+params:
+- dvclive/params.yaml
+metrics:
+- dvclive/metrics.json
+plots:
+- dvclive/plots/metrics:
+    x: step
